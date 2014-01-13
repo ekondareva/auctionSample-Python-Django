@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    <div class="bs-docs-example">
+        <dl>
+            <dt>{% trans "Title" %}</dt>
+            <dd>{{title}}</dd>
+            <dt>{% trans "Description" %}</dt>
+            <dd>{{description}}</dd>
+            <dt>{% trans "Minimum price" %}</dt>
+            <dd>{{minprice}}</dd>
+            <dt>{% trans "Due date" %}</dt>
+            <dd>{{enddate|date:"F d, Y H:i:s"}}</dd>
+        </dl>
+    </div>
+    {% if user.is_authenticated %}
+        {% if user == seller %}
+            {% ifequal status "ACT" %}
+                <small><a href="/editauction/{{pk}}" style="text-decoration: underline">{% trans "Edit" %}</a></small>
+            {% endifequal  %}
+        {% endif %}
+        {% if user != seller %}
+            {% ifequal status "ACT" %}
+                <small><a href="/bidauction/{{pk}}" style="text-decoration: underline">{% trans "Bid" %}</a></small>
+            {% endifequal  %}
+        {% endif %}
+        {% if user.is_superuser %}
+            <small><a href="/banauction/{{pk}}" style="text-decoration: underline">{% trans "Ban" %}</a></small>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+

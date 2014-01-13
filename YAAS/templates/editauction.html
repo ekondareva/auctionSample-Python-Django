@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    <div class="bs-docs-example">
+        <dl>
+            <dt>{% trans "Title" %}</dt>
+            <dd>{{title}}</dd>
+        </dl>
+    </div>
+    {% if error %}
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ error }} </strong>
+        </div>
+    {% endif %}
+    <form action="/editauction/{{ id }}/" method="post">
+        {% csrf_token %}
+        <legend>{% trans "Description" %}</legend>
+        <div class="control-group">
+            <div class="controls">
+                <textarea  name="description" id="description" rows="10" placeholder="Description">{{ description }}</textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" value="Save" class="btn">{% trans "Save" %}</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    <b> {% trans "Thank you" %}.</b><br>
+    {% if msg %}
+        {{ msg }}
+    {% endif %}
+    <br>
+    {% trans "You may proceed to" %} <a href="/"> {% trans "homepage" %}</a>.
+{% endblock %}

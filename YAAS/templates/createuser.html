@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    <form class="form-horizontal" action="/createuser/" method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>{% trans "Register new account" %}</legend>
+            <div class="control-group">
+                <label class="control-label">*{% trans "Login" %}</label>
+                <div class="controls">
+                    {{ form.username.errors }}
+                    {{ form.username }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">*{% trans "Password" %}</label>
+                <div class="controls">
+                    {{ form.password1.errors }}
+                    {{ form.password1 }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">*{% trans "Confirm Password" %}</label>
+                <div class="controls">
+                    {{ form.password2.errors }}
+                    {{ form.password2 }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans "First Name" %}</label>
+                <div class="controls">
+                    {{ form.firstname.errors }}
+                    {{ form.firstname }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans "Last Name" %}</label>
+                <div class="controls">
+                    {{ form.lastname.errors }}
+                    {{ form.lastname }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">*{% trans "Email" %}</label>
+                <div class="controls">
+                    {{ form.email.errors }}
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">{% trans "Save" %}</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

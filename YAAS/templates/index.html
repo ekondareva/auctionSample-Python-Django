@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    <form class="form-search" action="/gentestdata/" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn" type="button">Generate test data</button>
+    </form>
+    <h1>{% trans "Auctions" %}</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form class="form-search" action="/searchauction/" method="post">
+        {% csrf_token %}
+        <input type="text" class="input-medium search-query"
+               name="searchvalue" id="searchvalue" placeholder="Title">
+        <button type="submit" class="btn">{% trans "Search" %}</button>
+    </form>
+    <table class="table table-striped table-hover">
+        {% if values %}
+            <tbody>
+            {% for a in values %}
+                <tr>
+                    <td>
+                        <p>
+                        <h4><a href="/viewauction/{{a.pk}}" style="text-decoration: underline">{{ a.title}}</a></h4>
+                        </p>
+                        <p class="lead">
+                            {{ a.description }}
+                        </p>
+                        <p>
+                            <small>Expired: {{ a.deadline_date|date:"F d, Y H:i:s" }}</small>
+                        </p>
+                        {% if user.is_authenticated %}
+                            {% if user == a.user %}
+                                {% ifequal  a.status "ACT" %}
+                                    <small><a href="/editauction/{{a.pk}}" style="text-decoration: underline">{% trans "Edit" %}</a></small>
+                                {% endifequal  %}
+                            {% endif %}
+                            {% if user != a.user  %}
+                                {% ifequal  a.status "ACT" %}
+                                    <small><a href="/bidauction/{{a.pk}}" style="text-decoration: underline">{% trans "Bid" %}</a></small>
+                                {% endifequal %}
+                            {% endif %}
+                            {% if user.is_superuser%}
+                                <small><a href="/banauction/{{a.pk}}" style="text-decoration: underline">{% trans "Ban" %}</a></small>
+                            {% endif %}
+                            {% ifequal  a.status "ADJ" %}
+                                <small>Resolved {{ a.winner_bid }}</small>
+                            {% endifequal  %}
+                            {% ifequal  a.status "DUE" %}
+                                <small>Is being Resolved</small>
+                            {% endifequal  %}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        {% endif %}
+    </table>
+{% endblock %}
+{% block footer_content %}
+    <p class="muted credit">The YAAS Web Application 2013. Kondareva E.M.</p>
+{% endblock %}

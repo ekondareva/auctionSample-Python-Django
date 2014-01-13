@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if error %}
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ error }} </strong>
+        </div>
+    {% endif %}
+    <form class="form-horizontal" action="/edituseraccount/" method="POST">
+        {% csrf_token %}
+        <fieldset>
+            <legend>{% trans "Edit account information" %}</legend>
+            <div class="control-group">
+                <label class="control-label">{% trans "First name" %}</label>
+                <div class="controls">
+                    {{ form.firstname.errors }}
+                    {{ form.firstname }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans "Last name" %}</label>
+                <div class="controls">
+                    {{ form.lastname.errors }}
+                    {{ form.lastname }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans "New Password" %}</label>
+                <div class="controls">
+                    {{ form.newpassword.errors }}
+                    {{ form.newpassword }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans "Confirm Password" %}</label>
+                <div class="controls">
+                    {{ form.confirmation.errors }}
+                    {{ form.confirmation }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans "Email" %}</label>
+                <div class="controls">
+                    {{ form.email.errors }}
+                    {{ form.email }}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" class="btn">{% trans "Save" %}</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    <div class="bs-docs-example">
+        <dl>
+            <dt>{% trans "Title" %}</dt>
+            <dd>{{title}}</dd>
+            <dt>{% trans "Description" %}</dt>
+            <dd>{{description}}</dd>
+            <dt>{% trans "Minimum price" %}</dt>
+            <dd>{{minprice}}</dd>
+            <dt>{% trans "Last bid" %}</dt>
+            <dd>{{curprice}}</dd>
+            <dt>{% trans "Due date" %}</dt>
+            <dd>{{enddate|date:"F d, Y H:i:s"}}</dd>
+        </dl>
+    </div>
+    {% if error %}
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ error }} </strong>
+        </div>
+    {% endif %}
+    <form action="/bidauction/{{ id }}/" method="post">
+        {% csrf_token %}
+        <legend>{% trans "Your bid" %}</legend>
+        <div class="control-group">
+            <div class="controls">
+                <input type="hidden" name="edited_version" value="{{ edited_version }}" />
+                <input type="hidden" name="bid_edited_version" value="{{ bid_edited_version }}" />
+                {{ form.price.errors }}
+                {{ form.price }}
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" value="Save" class="btn">{% trans "Save" %}</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    <form class="form-signin" action="" method="POST">
+        {% csrf_token %}
+        {% if error %}
+            <div class="alert">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <strong>{{ error }} </strong>
+            </div>
+        {% endif %}
+        <h2 class="form-signin-heading">{% trans "Please sign in" %}</h2>
+        <input type="text" class="input-block-level" placeholder="Login" name="login" value="" id="login">
+        <input type="password" class="input-block-level" placeholder="Password" name="password" value="" id="password">
+        <button class="btn btn-large btn-primary" type="submit">{% trans "Sign in" %}</button>
+        <p>
+            {% trans "Don't have a username?" %} <a href="http://127.0.0.1:8000/createuser/">{% trans "Create" %}</a>
+        </p>
+        <input type="hidden" name="next" value="/">
+    </form>
+{% endblock %}
+
+{% block footer_content %}
+{% endblock %}

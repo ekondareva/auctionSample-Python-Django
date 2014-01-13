@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    <p><b>{% trans "Confirm Auction" %}</b></p>
+    {% if error %}
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ error }} </strong>
+        </div>
+    {% endif %}
+    <b>{% trans "Title" %}: {{a_title}}</b><br>
+    {% trans "Description" %}:{{a_description}}<br>
+    {% trans "Minimum price" %}: {{a_minprice}}<br>
+    <form action="/saveauctionconf/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <INPUT TYPE=HIDDEN NAME="a_title" VALUE='{{a_title}}'>
+        <INPUT TYPE=HIDDEN NAME="a_description" VALUE='{{a_description}}'>
+        <INPUT TYPE=HIDDEN NAME="a_minprice" VALUE={{a_minprice}}>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

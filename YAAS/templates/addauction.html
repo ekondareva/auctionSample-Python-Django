@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load i18n %}
+<!DOCTYPE html>
+{% block content %}
+    {% if error %}
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>{{ error }} </strong>
+        </div>
+    {% endif %}
+    <form action="/addauction/" method="post" class="form-horizontal">
+        {% csrf_token %}
+        <fieldset>
+            <legend>{% trans "Add new auction" %}</legend>
+            <div class="control-group">
+                <label class="control-label">Title</label>
+                <div class="controls">
+                    {{ form.title.errors }}
+                    {{ form.title }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans "Description" %}</label>
+                <div class="controls">
+                    {{ form.description.errors }}
+                    {{ form.description }}
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">{% trans "Minimum price" %}</label>
+                <div class="controls">
+                    {{ form.minprice.errors }}
+                    {{ form.minprice }}
+                </div>
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    <button type="submit" value="Save" class="btn">{% trans "Save" %}</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}
